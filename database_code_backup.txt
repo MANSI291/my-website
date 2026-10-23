@@ -1,0 +1,104 @@
+import sqlite3
+from pathlib import Path
+from flask import Flask
+
+app = Flask(__name__)
+
+
+BASE_DIR = Path(__file__).resolve().parent
+DATABASE = BASE_DIR / "database.db"
+
+
+def get_db_connection():
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+
+
+def create_database():
+    conn = get_db_connection()
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS questions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            question TEXT NOT NULL,
+            option_a TEXT NOT NULL,
+            option_b TEXT NOT NULL,
+            option_c TEXT NOT NULL,
+            option_d TEXT NOT NULL,
+            answer TEXT NOT NULL
+        )
+    """)
+
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS results (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            score INTEGER NOT NULL,
+            total INTEGER NOT NULL
+        )
+    """)
+
+    # Add questions only if the table is empty
+    count = conn.execute(
+        "SELECT COUNT(*) FROM questions"
+    ).fetchone()[0]
+
+    if count == 0:
+        questions = [
+            (
+                "Which of the following is a strong password?",
+                "123456",
+                "password",
+                "John2005",
+                "Cyb3r@Safe#2026",
+                "D"
+            ),
+            (
+                "What should you do if you receive a suspicious link?",
+                "Click it immediately",
+                "Share it with friends",
+                "Avoid clicking and verify the source",
+                "Download the attachment",
+                "C"
+            ),
+            (
+                "Which behavior is responsible on social media?",
+                "Sharing someone's private information",
+                "Respecting other people's privacy",
+                "Cyberbullying",
+                "Creating fake accounts",
+                "B"
+            ),
+            (
+                "What is phishing?",
+                "A type of online game",
+                "An attempt to steal information using fake messages or websites",
+                "A programming language",
+                "A computer operating system",
+                "B"
+            ),
+            (
+                "What should you do before sharing information online?",
+                "Check whether the information is reliable",
+                "Share it immediately",
+                "Ignore the source",
+                "Change the information",
+                "A"
+            )
+        ]
+
+        conn.executemany("""
+            INSERT INTO questions
+            (question, option_a, option_b, option_c, option_d, answer)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, questions)
+
+    conn.commit()
+    conn.close()
+
+if __name__ == "__main__":
+    create_database()
+    app.run(debug=True)

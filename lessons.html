@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Cyber Safety Lessons</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        /* Lesson cards layout */
+        .topics .cards {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 22px;
+            max-width: 1380px;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        /* Make the complete card clickable */
+        .topics .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 35px 22px;
+            min-height: 270px;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            text-decoration: none;
+            color: #10243b;
+            cursor: pointer;
+            transition: transform 0.2s ease,
+                        box-shadow 0.2s ease;
+        }
+
+        .topics .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .topics .card:focus-visible {
+            outline: 3px solid #0877d1;
+            outline-offset: 4px;
+        }
+
+        .topics .card .icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .topics .card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #10243b;
+        }
+
+        .topics .card p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #58708d;
+        }
+
+        .topics .card .start-lesson {
+            margin-top: auto;
+            padding-top: 18px;
+            color: #0877d1;
+            font-weight: bold;
+        }
+
+        /* Responsive layout */
+        @media (max-width: 1000px) {
+            .topics .cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 600px) {
+            .topics .cards {
+                grid-template-columns: 1fr;
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation bar -->
+    <nav>
+        <div class="logo">🛡️ CyberWise</div>
+
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="{{ url_for('lessons') }}">Lessons</a></li>
+            <li><a href="/quiz">Quiz</a></li>
+        </ul>
+    </nav>
+
+    <!-- Introduction -->
+    <section class="about">
+        <h2>Cyber Ethics &amp; Safety Lessons</h2>
+
+        <p>
+            Follow these important principles to become a
+            responsible digital citizen.
+        </p>
+    </section>
+
+    <!-- Clickable lesson cards -->
+    <section class="topics">
+
+        <div class="cards">
+
+            <!-- 1. Strong Passwords -->
+            <a href="{{ url_for('lesson_detail', slug='strong-passwords') }}"
+               class="card">
+
+                <div class="icon">🔑</div>
+
+                <h3>Strong Passwords</h3>
+
+                <p>
+                    Use unique passwords containing a combination
+                    of uppercase letters, lowercase letters,
+                    numbers and symbols.
+                </p>
+
+                
+            </a>
+
+            <!-- 2. Protect Privacy -->
+            <a href="{{ url_for('lesson_detail', slug='protect-privacy') }}"
+               class="card">
+
+                <div class="icon">🔒</div>
+
+                <h3>Protect Privacy</h3>
+
+                <p>
+                    Do not share sensitive personal information
+                    such as passwords, addresses or financial
+                    information with unknown people.
+                </p>
+
+                
+            </a>
+
+            <!-- 3. Avoid Phishing -->
+            <a href="{{ url_for('lesson_detail', slug='avoid-phishing') }}"
+               class="card">
+
+                <div class="icon">🎣</div>
+
+                <h3>Avoid Phishing</h3>
+
+                <p>
+                    Be careful with suspicious emails, messages
+                    and websites asking for personal information.
+                </p>
+
+                
+            </a>
+
+            <!-- 4. Respect Others -->
+            <a href="{{ url_for('lesson_detail', slug='respect-others') }}"
+               class="card">
+
+                <div class="icon">🤝</div>
+
+                <h3>Respect Others</h3>
+
+                <p>
+                    Do not cyberbully, harass or share another
+                    person's private information without permission.
+                </p>
+
+                
+            </a>
+
+            <!-- 5. Verify Information -->
+            <a href="{{ url_for('lesson_detail', slug='verify-information') }}"
+               class="card">
+
+                <div class="icon">📰</div>
+
+                <h3>Verify Information</h3>
+
+                <p>
+                    Check reliable sources before believing or
+                    sharing information on the internet.
+                </p>
+
+                
+            </a>
+
+            <!-- 6. Use Technology Responsibly -->
+            <a href="{{ url_for('lesson_detail', slug='use-technology-responsibly') }}"
+               class="card">
+
+                <div class="icon">💻</div>
+
+                <h3>Use Technology Responsibly</h3>
+
+                <p>
+                    Use digital technology for positive purposes
+                    and respect laws, rules and other users.
+                </p>
+
+                
+            </a>
+
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>CyberWise | Responsible Digital Citizenship</p>
+    </footer>
+
+</body>
+</html>

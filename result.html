@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Result</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">🛡️ CyberWise</div>
+
+</nav>
+
+
+<section class="about">
+
+    <h2>Quiz Completed 🎉</h2>
+
+    <br>
+
+    <h3>
+        Well done, {{ name }}!
+    </h3>
+
+    <br>
+
+    <p>
+        Your score is:
+    </p>
+
+    <h1 style="color:#0284c7; margin:20px;">
+        {{ score }} / {{ total }}
+    </h1>
+
+
+    {% if score == total %}
+
+        <p>
+            🌟 Excellent! You have a strong understanding
+            of cyber ethics and responsible internet usage.
+        </p>
+
+    {% elif score >= total / 2 %}
+
+        <p>
+            👍 Good job! Keep learning about cyber safety
+            and responsible internet usage.
+        </p>
+
+    {% else %}
+
+        <p>
+            📚 Keep learning! Review the lessons and try
+            the quiz again.
+        </p>
+
+    {% endif %}
+
+
+    <br><br>
+
+    <a href="/quiz" class="btn">
+        Try Again
+    </a>
+
+    <a href="/" class="btn secondary">
+        Home
+    </a>
+
+</section>
+
+
+<footer>
+
+    <p>
+        CyberWise | Cyber Ethics Program
+    </p>
+
+</footer>
+
+</body>
+
+</html>

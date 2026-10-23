@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Quiz Results | CyberWise</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f7fc;
+            color: #24364b;
+            margin: 0;
+        }
+
+        .results-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 25px;
+        }
+
+        h1 {
+            color: #0877d1;
+            text-align: center;
+        }
+
+        .results-card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #0877d1;
+            color: white;
+        }
+
+        tr:hover td {
+            background: #f3f8ff;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 25px;
+            color: #58708d;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 12px 20px;
+            background: #0877d1;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .back-button:hover {
+            background: #065da5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="results-container">
+        <h1>
+            {% if is_admin %}
+                All Student Quiz Results
+            {% else %}
+                My Quiz Results
+            {% endif %}
+        </h1>
+
+        <div class="results-card">
+            {% if results %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Student Name</th>
+                            <th>Marks Scored</th>
+                            <th>Total Marks</th>
+                            <th>Percentage</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for student in results %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ student["name"] }}</td>
+                                <td>{{ student["score"] }}</td>
+                                <td>{{ student["total"] }}</td>
+                                <td>
+                                    {% if student["total"] > 0 %}
+                                        {{ "%.1f"|format(
+                                            student["score"] * 100 /
+                                            student["total"]
+                                        ) }}%
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="empty">
+                    No quiz results have been recorded yet.
+                    Complete and submit a quiz to see results here.
+                </p>
+            {% endif %}
+
+            <a href="{{ url_for('home') }}" class="back-button">
+                Back to Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>

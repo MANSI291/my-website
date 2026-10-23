@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ lesson.title }} | CyberWise</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body {
+            background: #f3f7fc;
+            font-family: Arial, sans-serif;
+            color: #24364b;
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .lesson-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 35px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .lesson-icon {
+            font-size: 48px;
+        }
+
+        h1 {
+            color: #0877d1;
+        }
+
+        h2 {
+            color: #163b60;
+            margin-top: 28px;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+
+        .activity {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f3ff;
+            border-radius: 10px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 20px;
+            background: #0877d1;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .back-button:hover {
+            background: #065da5;
+        }
+
+        @media (max-width: 600px) {
+            .lesson-container {
+                margin: 20px 12px;
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="lesson-container">
+
+        <div class="lesson-icon">{{ lesson.icon }}</div>
+        <h1>{{ lesson.title }}</h1>
+
+        {% if lesson.sections %}
+            {% for section in lesson.sections %}
+                <h2>{{ section.heading }}</h2>
+
+                {% if section.paragraph %}
+                    <p>{{ section.paragraph }}</p>
+                {% endif %}
+
+                {% if section.points %}
+                    <ul>
+                        {% for point in section.points %}
+                            <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <h2>What You Will Learn</h2>
+            <ul>
+                {% for point in lesson.content %}
+                    <li>{{ point }}</li>
+                {% endfor %}
+            </ul>
+        {% endif%}
+
+        {% if lesson.activity %}
+            <div class="activity">
+                <h2>Practice Activity</h2>
+                <p>{{ lesson.activity }}</p>
+            </div>
+        {% endif %}
+
+        <a href="{{ url_for('lessons') }}" class="Back">
+            &#8592; Back
+        </a>
+
+    </main>
+</body>
+</html>

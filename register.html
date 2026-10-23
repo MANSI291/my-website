@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | CyberWise</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="results-container">
+        <h1>Create Student Account</h1>
+
+        <form method="POST" action="{{ url_for('register') }}">
+            <p>
+                <label for="name">Full Name</label><br>
+                <input type="text" id="name" name="name" required>
+            </p>
+            <br>
+            <p>
+                <label for="username">Username</label><br>
+                <input type="text" id="username" name="username" required>
+            </p>
+            <br>
+            <p>
+                <label for="password">Password</label><br>
+                <input type="password" id="password" name="password" required>
+            </p>
+            <br>
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already registered?
+            <a href="{{ url_for('login') }}">Login here</a>
+        </p>
+    </div>
+</body>
+</html>

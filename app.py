@@ -578,6 +578,7 @@ def lesson_detail(slug):
 
 
 # Initialize the database and start Flask
+create_database()
+
 if __name__ == "__main__":
-    create_database()
     app.run(debug=True)

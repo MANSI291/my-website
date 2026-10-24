@@ -24,7 +24,11 @@
             <br>
             <button type="submit">Login</button>
         </form>
-
+{% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+        <p style="color: red;">{{ message }}</p>
+    {% endfor %}
+{% endwith %}
         <p>New student?
             <a href="{{ url_for('register') }}">Create an account</a>
         </p>

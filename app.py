@@ -144,7 +144,8 @@ def create_database():
         conn.commit()
         print("Database initialized successfully.")
 
-        # Create the admin account using Render environment variables
+      
+        # Create or update the admin account using Render environment variables
         admin_username = os.environ.get("ADMIN_USERNAME", "").strip()
         admin_password = os.environ.get("ADMIN_PASSWORD", "")
         admin_name = os.environ.get("ADMIN_NAME", "CyberWise Owner").strip()
@@ -164,10 +165,21 @@ def create_database():
                     admin_username,
                     generate_password_hash(admin_password)
                 ))
-                conn.commit()
                 print("Admin account created successfully.")
             else:
-                print("Configured admin username already exists.")
+                conn.execute("""
+                    UPDATE users
+                    SET name = ?, password_hash = ?, role = 'admin'
+                    WHERE username = ?
+                """, (
+                    admin_name,
+                    generate_password_hash(admin_password),
+                    admin_username
+                ))
+                print("Admin account updated successfully.")
+
+            conn.commit()
+
 
     finally:
         conn.close()

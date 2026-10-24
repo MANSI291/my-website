@@ -304,8 +304,7 @@ def results_page():
     if "user_id" not in session:
         return redirect(url_for("login"))
 
-    conn = sqlite3.connect("database.db")
-    conn.row_factory = sqlite3.Row
+    conn = get_db_connection()
 
     # Admin can see every student's result
     if session.get("role") == "admin":

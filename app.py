@@ -22,7 +22,6 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-
 # Create database tables and insert quiz questions
 def create_database():
     conn = get_db_connection()
@@ -294,6 +293,7 @@ def register():
 
 
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -309,23 +309,30 @@ def login():
         finally:
             conn.close()
 
-        if user and check_password_hash(
-            user["password_hash"], password
-        ):
-            session.clear()
-            session["user_id"] = user["id"]
-            session["student"] = user["name"]
-            session["role"] = user["role"]
+        if user is None:
+            print("LOGIN CHECK: username not found")
+            flash("Invalid username or password.")
+            return render_template("login.html")
 
-            if user["role"] == "admin":
-                return redirect(url_for("results_page"))
+        if not check_password_hash(user["password_hash"], password):
+            print("LOGIN CHECK: username found, password rejected")
+            flash("Invalid username or password.")
+            return render_template("login.html")
 
-            return redirect(url_for("lessons"))
+        print("LOGIN CHECK: password accepted")
+        print("LOGIN CHECK: role =", user["role"])
 
-        flash("Invalid username or password.")
+        session.clear()
+        session["user_id"] = user["id"]
+        session["student"] = user["name"]
+        session["role"] = user["role"]
+
+        if user["role"] == "admin":
+            return redirect(url_for("results_page"))
+
+        return redirect(url_for("lessons"))
 
     return render_template("login.html")
-
 
 
 @app.route("/logout")
